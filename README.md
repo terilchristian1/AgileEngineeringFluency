@@ -7,7 +7,7 @@ This is a fluency model: we lay out the stages of proficiency, and find that tea
 
 The results a team gets are determined by which stages they are fluent at. Partial / developing fluency at a stage does not change the team's results much. Full fluency does.
 
-The model is shown at [http://arlobelshee.github.io/AgileEngineeringFluency/](http://arlobelshee.github.io/AgileEngineeringFluency/)
+The model is shown at [https://terilchristian1.github.io/AgileEngineeringFluency/Stages_of_practice_map.html?)
 
 License
 -------
