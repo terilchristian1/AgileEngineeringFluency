@@ -44,7 +44,6 @@ html, body {
 }
 
 .options_pane {
-	position: float;
 	z-index: 2;
 	left: 0;
 	bottom: 0;
