@@ -357,6 +357,7 @@ html, body {
 	padding: 0.4em 0.8em 0.6em;
 	border: 2px solid #909090;
 	background-color: #fff;
+	height: 200px;
 }
 
 	.legend h2 {
@@ -432,16 +433,26 @@ html, body {
 
 .display_port {
 	left: 0;
-	width: 60%;
+	width: 100%;
 }
 
 .detail_pane {
-	right: 0;
 	width: 40%;
 	background-color: #FFF;
 	overflow-y: scroll;
+	margin:5% 30%;
+	/*display:none;*/
 }
 
 .stress {
 	color: #0f8a06;
+}
+
+.closebtnarea {
+    float: right;
+    position: sticky;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 100;
 }

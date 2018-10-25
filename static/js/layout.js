@@ -246,15 +246,18 @@ var StagesVm = function () {
 		this._id = "stages";
 		this.show_all_dependencies = ko.observable(true);
 		this.focal_skill = ko.observable(null);
+		this.focal_hidden = ko.observable(false);
 		this.focal_level = ko.observable(null);
 		this.show_skill_details = function (skill) {
 			self.focal_level(null);
 			self.focal_skill(skill);
+			self.focal_hidden(true);
 			self.update_url();
 		};
 		this.hide_details = function () {
 			self.focal_skill(null);
 			self.focal_level(null);
+			self.focal_hidden(false);
 			self.update_url();
 		};
 		this.show_level_details = function (level) {
