@@ -18,6 +18,13 @@
 	<script type="text/javascript" src="static/js/history1.8/native.history.js">
 
 	</script>
+    <style>
+        #legendid {
+            width: 500px;
+            height: 200px;
+        }
+    </style>
+
 	<script type="text/javascript">
 		function start() {
 			extend_ko();
@@ -72,7 +79,39 @@
 		<p class="copyright">View: <a href="http://bit.ly/CodeByRefactoringModules">http://bit.ly/CodeByRefactoringModules</a>, print (PDF): <a href="http://bit.ly/CodeByRefactoringModulesPdf">http://bit.ly/CodeByRefactoringModulesPdf</a>.
 			Version <span data-bind="text: app.version"></span>. Copyright &copy; Innovating Teams, LLC, 2016.</p>
 	</div>
-	<div class="detail_pane">
+    <div class="legend" id="legendid" data-bind="with: app">
+        <h2>Legend</h2>
+        <div id="show_label">Show</div>
+        <table>
+            <tbody>
+                <!-- ko foreach: components -->
+                <tr class="entry">
+                    <td class="show"><input type="checkbox" data-bind="checked: show_dependencies" /></td>
+                    <td>
+                        <div class="solid_line" data-bind="style: { 'border-color': color }">&nbsp;</div>
+                    </td>
+                    <td class="category" data-bind="text: name"></td>
+                    <td class="techniques" data-bind="text: '(' + techniques() + ')'"></td>
+                </tr>
+                <!-- /ko -->
+                <tr class="entry">
+                    <td class="show"><input type="checkbox" data-bind="checked: show_all_dependencies" /></td>
+                    <td colspan="2">All</td>
+                </tr>
+                <!-- ko foreach: kinds -->
+                <tr class="entry">
+                    <td class="show">&nbsp;</td>
+                    <td>
+                        <div class="solid_line" data-bind="style: { 'border-style': border_style }">&nbsp;</div>
+                    </td>
+                    <td data-bind="text: description" colspan="2"></td>
+                </tr>
+                <!-- /ko -->
+            </tbody>
+        </table>
+    </div>
+	<div class="detail_pane" data-bind="css: { hidden: !app.focal_hidden() }">
+    	<span class="closebtnarea"> <button class="btn btn-default" data-bind="click: app.hide_details"> Close </button> </span>
 		<div class="how_to">
 			<p>View details for any practice by clicking it on the map.</p>
 			<header>
@@ -121,37 +160,6 @@
 					all copyright and other IP issues, have rights to your contribution, and are releasing such rights to that contribution
 					such that we can include it with the rest of the model for immediate publication.</p>
 			</article>
-		</div>
-		<div class="legend" data-bind="with: app">
-			<h2>Legend</h2>
-			<div id="show_label">Show</div>
-			<table>
-				<tbody>
-					<!-- ko foreach: components -->
-					<tr class="entry">
-						<td class="show"><input type="checkbox" data-bind="checked: show_dependencies" /></td>
-						<td>
-							<div class="solid_line" data-bind="style: { 'border-color': color }">&nbsp;</div>
-						</td>
-						<td class="category" data-bind="text: name"></td>
-						<td class="techniques" data-bind="text: '(' + techniques() + ')'"></td>
-					</tr>
-					<!-- /ko -->
-					<tr class="entry">
-						<td class="show"><input type="checkbox" data-bind="checked: show_all_dependencies" /></td>
-						<td colspan="2">All</td>
-					</tr>
-					<!-- ko foreach: kinds -->
-					<tr class="entry">
-						<td class="show">&nbsp;</td>
-						<td>
-							<div class="solid_line" data-bind="style: { 'border-style': border_style }">&nbsp;</div>
-						</td>
-						<td data-bind="text: description" colspan="2"></td>
-					</tr>
-					<!-- /ko -->
-				</tbody>
-			</table>
 		</div>
 		<div class="skill focus_dialog hidden" data-bind="css: { hidden: !app.focal_skill(), editing: app.editing() }, click: app.hide_details">
 			<div class="contents" data-bind="click: function(){}, clickBubble: false, with: app.focal_skill()">
@@ -224,5 +232,51 @@
 		</div>
 	</div>
 </body>
+<script>
 
+//Make the DIV element draggagle:
+    dragElement(document.getElementById("legendid"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+      e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+	$( ".legend " ).draggable({ containment: "#legendid" })
+</script>
 </html>
